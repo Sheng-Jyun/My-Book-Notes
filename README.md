@@ -15,11 +15,32 @@
 - 🎨 Clean, responsive design with elegant typography (Playfair Display, Georgia, Inter)
 - 💾 Backend with Node.js + Express and **PostgreSQL database**
 
+## 📁 Folder Structure
+
+---
+
+```
+
+My-Book-Notes/
+├── views/                   # EJS templates for rendering HTML pages
+│   └── index.ejs            # Main UI with book form and list
+├── public/                  # Static files (CSS, images, JS)
+│   └── style.css            # Custom styles for the UI
+├── db/                      # (Optional) DB setup or SQL files
+│   └── schema.sql           # PostgreSQL table creation (if used)
+├── .gitignore               # Files and folders to ignore in Git
+├── README.md                # Project documentation
+├── demo.gif                 # Optional: animation
+├── index.js                # Express.js backend server
+├── package.json             # NPM dependencies and scripts
+└── books.db                 # (If SQLite used, or replace with PostgreSQL connection)
+
+```
 ---
 
 ## 🖼️ Preview
 
-![screenshot](preview.png) <!-- Add your own preview.png -->
+![Demo Animation](./demo.gif)
 
 ---
 
