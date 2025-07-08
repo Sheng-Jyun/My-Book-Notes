@@ -15,7 +15,7 @@
 - 🎨 Clean, responsive design with elegant typography (Playfair Display, Georgia, Inter)
 - 💾 Backend with Node.js + Express and **PostgreSQL database**
 
-## 📁 Folder Structure
+## 📁 Project Structure
 
 ---
 
@@ -31,7 +31,7 @@ My-Book-Notes/
 ├── .gitignore               # Files and folders to ignore in Git
 ├── README.md                # Project documentation
 ├── demo.gif                 # Optional: animation
-├── index.js                # Express.js backend server
+├── index.js                 # Express.js backend server
 ├── package.json             # NPM dependencies and scripts
 └── books.db                 # (If SQLite used, or replace with PostgreSQL connection)
 
@@ -61,8 +61,8 @@ My-Book-Notes/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/book-notes-app.git
-cd book-notes-app
+git clone https://github.com/your-username/My-Book-Notes.git
+cd My-Book-Notes
 ```
 
 ### 2. Install dependencies
