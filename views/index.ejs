@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Book Notes</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>📚 My Book Notes</h1>
+    <p class="intro-text">
+    <strong>Books I’ve read</strong><br>
+    Tiny summary but detailed notes for each. Use the ISBN number to find it from your local library or anywhere else.
+    This page will constantly update as I read more, so bookmark it if you want to check back in a few months.
+    </p>
+  <form action="/add" method="POST">
+    <input type="text" name="title" placeholder="Title" required />
+    <input type="text" name="author" placeholder="Author" />
+    <input type="text" name="isbn" placeholder="ISBN" />
+    <select name="rating" required>
+        <option value="">Rating (1–10)</option>
+        <% for(let i = 1; i <= 10; i++) { %>
+            <option value="<%= i %>"><%= i %></option>
+        <% } %>
+    </select>
+    <input type="date" name="date_read" />
+    <textarea name="review" placeholder="Review"></textarea>
+    <button type="submit">Add Book</button>
+  </form>
+
+  <% books.forEach(book => { %>
+<div class="book">
+<a href="https://www.amazon.com/s?k=<%= encodeURIComponent(book.title + ' ' + book.author) %>" target="_blank" rel="noopener noreferrer">
+  <img src="<%= book.cover_url %>" alt="Cover of <%= book.title %>" />
+</a>
+  <div class="book-details">
+    <h2 class="book-title" data-original="<%= book.title %>"><%= book.title %></h2>
+    <p class="book-author" data-original="<%= book.author %>"><em>by <%= book.author %></em></p>
+    <p class="book-rating" data-original="<%= book.rating %>">Rating: <%= book.rating %>/10</p>
+    <p class="review-text" data-original="<%= book.review %>"><%= book.review %></p>
+    <button class="toggle-review">Show more</button>
+
+    <div class="actions">
+        <button class="edit-btn">Edit</button>
+        <button class="save-btn" style="display:none;">Save</button>
+        <button class="cancel-btn" style="display:none;">Cancel</button>
+        <form action="/delete/<%= book.id %>" method="POST" style="display:inline;">
+            <button type="submit" class="delete-btn">Delete</button>
+        </form>
+    </div>
+  </div>
+</div>
+</div>
+  <% }); %>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // Handle "Show more" / "Show less"
+    document.querySelectorAll(".toggle-review").forEach(button => {
+        button.addEventListener("click", () => {
+        const review = button.previousElementSibling;
+        if (review.classList.contains("review-text")) {
+            review.classList.toggle("expanded");
+            button.textContent = review.classList.contains("expanded") ? "Show less" : "Show more";
+        }
+        });
+    });
+
+    // Handle inline edit
+    document.querySelectorAll(".book").forEach(book => {
+        const editBtn = book.querySelector(".edit-btn");
+        const saveBtn = book.querySelector(".save-btn");
+        const cancelBtn = book.querySelector(".cancel-btn");
+        const showMoreBtn = book.querySelector(".toggle-review");
+
+        const titleEl = book.querySelector(".book-title");
+        const authorEl = book.querySelector(".book-author");
+        const ratingEl = book.querySelector(".book-rating");
+        const reviewEl = book.querySelector(".review-text");
+
+        const bookId = book.querySelector("form").action.split("/").pop();
+
+        const makeInput = (el, name) => {
+        const value = el.dataset.original;
+        const input = document.createElement("input");
+        input.name = name;
+        input.value = value;
+        input.className = "inline-input";
+        return input;
+        };
+
+        const makeTextarea = (el, name) => {
+        const value = el.dataset.original;
+        const textarea = document.createElement("textarea");
+        textarea.name = name;
+        textarea.value = value;
+        textarea.className = "inline-textarea";
+        return textarea;
+        };
+
+        editBtn.addEventListener("click", () => {
+        titleEl.replaceWith(makeInput(titleEl, "title"));
+        authorEl.replaceWith(makeInput(authorEl, "author"));
+        ratingEl.replaceWith(makeInput(ratingEl, "rating"));
+        reviewEl.replaceWith(makeTextarea(reviewEl, "review"));
+
+        editBtn.style.display = "none";
+        saveBtn.style.display = "inline-block";
+        cancelBtn.style.display = "inline-block";
+        if (showMoreBtn) showMoreBtn.style.display = "none"; // hide Show More during edit
+        });
+
+        cancelBtn.addEventListener("click", () => {
+        location.reload(); // resets back to display mode
+        });
+
+        saveBtn.addEventListener("click", () => {
+        const newTitle = book.querySelector("input[name='title']").value;
+        const newAuthor = book.querySelector("input[name='author']").value;
+        const newRating = book.querySelector("input[name='rating']").value;
+        const newReview = book.querySelector("textarea[name='review']").value;
+
+        fetch(`/edit/${bookId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+            title: newTitle,
+            author: newAuthor,
+            rating: newRating,
+            review: newReview
+            })
+        }).then(res => {
+            if (res.ok) {
+            location.reload();
+            } else {
+            alert("Update failed");
+            }
+        });
+        });
+    });
+    });
+    </script>
+</body>
+</html>

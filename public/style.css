@@ -1,0 +1,235 @@
+body {
+  font-family: 'Inter', sans-serif;
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.intro-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: #2f2f2f;
+  text-align: center;
+  max-width: 740px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.75;
+  background-color: #f9f9f9;
+  padding: 1.5rem 2rem;
+  border-left: 6px solid #0056b3;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+form {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+form input,
+form select,
+form textarea {
+  font-family: 'Inter', sans-serif;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+form textarea {
+  grid-column: 1 / -1;
+  height: 80px;
+  resize: vertical;
+}
+
+form button {
+  grid-column: 1 / -1;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+.book {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 1rem;
+}
+
+.book img {
+  width: 200px;
+  height: 300px; /* 🔒 Fix the height so it never grows */
+  object-fit: cover;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+.book-details {
+  flex: 1;
+}
+
+.book h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-family: 'Georgia', serif; /* Elegant serif title font */
+  font-weight: bold;
+  color: #111827;
+}
+
+.book .book-author {
+  font-family: 'Roboto', sans-serif; /* 🎨 distinct font */
+  font-style: normal;
+  color: #888888; /* soft grey */
+  font-size: 0.95rem;
+  margin-top: -0.25rem;
+}
+
+.book .rating-stars {
+  color: #fbbf24; /* Golden yellow */
+  font-size: 1.1rem;
+  margin: 0.2rem 0;
+}
+
+.book p {
+  margin: 0.3rem 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.book .actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.book .actions a,
+.book .actions button {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  color: white;
+  height: 36px;
+  min-width: 64px;
+  line-height: 1.2;
+  transition: background-color 0.2s ease;
+}
+
+.book .actions a {
+  background-color: #6c757d;
+}
+
+.book .actions a:hover {
+  background-color: #5a6268;
+}
+
+.book .actions button {
+  background-color: #dc3545;
+}
+
+.book .actions button:hover {
+  background-color: #c82333;
+}
+
+.book .actions form {
+  margin: 0;        /* Ensure Delete form has no margin */
+}
+
+.book:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.2s ease;
+}
+
+.book .actions button {
+  box-shadow: none;
+}
+
+.book .actions form {
+  all: unset;
+  display: inline;
+}
+
+.review-text {
+  font-family: 'Georgia', serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 4 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+.review-text.expanded {
+  -webkit-line-clamp: unset;
+  max-height: none;
+}
+
+.toggle-review {
+  all: unset;
+  font-size: 0.85rem;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-bottom: 0.5rem;
+}
+
+/* Inline editing styles */
+.inline-input,
+.inline-textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inline-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Keep layout spacing when editing */
+.book-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.review-text.expanded {
+  max-height: 300px; /* Limit expansion */
+  overflow-y: auto;  /* Enable scroll */
+  -webkit-line-clamp: unset;
+}
